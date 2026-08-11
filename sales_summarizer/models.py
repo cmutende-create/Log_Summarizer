@@ -2,9 +2,7 @@ from dataclasses import dataclass  # autogenerates fields declared
 from datetime import date
 
 
-@dataclass(
-    frozen=True
-)  # makes instances immutable after creation
+@dataclass(frozen=True)  # makes instances immutable after creation
 class SalesRecord:
     """A single validated row from the sales CSV."""
 
