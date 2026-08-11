@@ -4,8 +4,8 @@ from datetime import datetime, date
 from sales_summarizer.models import SalesRecord
 from sales_summarizer.exceptions import InvalidRecordError
 
-def parse_sales_record(row: dict[str: str]) -> SalesRecord:
-    order_id = row.get("Order ID").strip() 
+def parse_sales_record(row: dict[str, str]) -> SalesRecord:
+    order_id = row.get("Order ID", "").strip() 
     #checks order id is not empty
     if not order_id:
         raise InvalidRecordError("Missing Order ID")
@@ -30,8 +30,8 @@ def parse_sales_record(row: dict[str: str]) -> SalesRecord:
         quantity = int(row.get("Quantity", ""))
     except ValueError:
         raise InvalidRecordError(f"Invalid Quantity: {row.get('Quantity')}")
-    if quantity < 0:
-        raise InvalidRecordError(f"Negative Quantity: {quantity}")
+    if quantity <= 0:
+        raise InvalidRecordError(f"Non-positive Quantity: {quantity}")
 
     category = row.get("Category", "").strip()
     if not category:
