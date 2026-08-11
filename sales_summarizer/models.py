@@ -17,4 +17,5 @@ class SalesRecord:
     customer_name: str
     state: str
     city: str
-   
+
+    
