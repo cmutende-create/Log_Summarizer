@@ -1,9 +1,9 @@
-# A test to ensure that the parser correctly reads and validates sales records from a CSV file.
-
+# Tests for parse_sales_record: happy path and failure cases.
 import pytest
 
 from sales_summarizer.parser import parse_sales_record
 from sales_summarizer.exceptions import InvalidRecordError
+
 
 def make_valid_row(**overrides: str) -> dict[str, str]:
     row = {
@@ -17,10 +17,11 @@ def make_valid_row(**overrides: str) -> dict[str, str]:
         "Order Date": "2023-06-27",
         "CustomerName": "David Padilla",
         "State": "Florida",
-        "City": "Miami"
+        "City": "Miami",
     }
     row.update(overrides)
     return row
+
 
 def test_parse_valid_row_returns_sales_record() -> None:
     row = make_valid_row()
@@ -35,7 +36,7 @@ def test_parse_valid_row_returns_sales_record() -> None:
     assert record.payment_mode == "UPI"
 
 
-#failure-case tests
+# failure-case tests
 def test_missing_order_id_raises() -> None:
     row = make_valid_row(**{"Order ID": ""})
     with pytest.raises(InvalidRecordError, match="Missing Order ID"):

@@ -1,12 +1,14 @@
-#Data models for the sales log summarizer.
-
-from dataclasses import dataclass #autogenerates fields declared eg __init__
+from dataclasses import dataclass  # autogenerates fields declared
 from datetime import date
 
-@dataclass(frozen=True) #makes instances immutable after creation eg you cant do record.amount = 99 later
+
+@dataclass(
+    frozen=True
+)  # makes instances immutable after creation
 class SalesRecord:
-    """ A single validated row from the sales CSV. """
-    order_id: str 
+    """A single validated row from the sales CSV."""
+
+    order_id: str
     amount: float
     profit: float
     quantity: int
@@ -17,5 +19,3 @@ class SalesRecord:
     customer_name: str
     state: str
     city: str
-
-    
