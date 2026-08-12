@@ -33,5 +33,4 @@ class SalesSummarizer:
         quantities: dict[str, int] = defaultdict(int)
         for record in self.records:
             quantities[record.sub_category] += record.quantity
-
         return max(quantities, key=lambda sub_cat: quantities[sub_cat])

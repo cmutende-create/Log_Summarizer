@@ -32,6 +32,7 @@ def test_clean_csv_normalizes_common_csv_errors(tmp_path: Path) -> None:
     assert report.input_rows == 4
     assert report.output_rows == 3
     assert report.skipped_blank_rows == 1
+    assert report.missing_values_found == 5
     assert report.missing_cells_filled == 4
     assert report.extra_cells_dropped == 1
     assert report.normalized_cells > 0

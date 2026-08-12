@@ -44,6 +44,7 @@ def main() -> None:
         print(f"Input rows: {report.input_rows}")
         print(f"Output rows: {report.output_rows}")
         print(f"Blank rows skipped: {report.skipped_blank_rows}")
+        print(f"Missing values found: {report.missing_values_found}")
         print(f"Missing cells filled: {report.missing_cells_filled}")
         print(f"Extra cells dropped: {report.extra_cells_dropped}")
         print(f"Cells normalized: {report.normalized_cells}")

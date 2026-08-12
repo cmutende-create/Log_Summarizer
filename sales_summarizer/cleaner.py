@@ -27,6 +27,7 @@ class CleaningReport:
     input_rows: int = 0
     output_rows: int = 0
     skipped_blank_rows: int = 0
+    missing_values_found: int = 0
     missing_cells_filled: int = 0
     extra_cells_dropped: int = 0
     normalized_cells: int = 0
@@ -107,6 +108,7 @@ def clean_cell(value: str, report: CleaningReport) -> str:
     cleaned = " ".join(value.strip().split())
 
     if cleaned.lower() in MISSING_VALUES:
+        report.missing_values_found += 1
         cleaned = ""
     else:
         cleaned = normalize_boolean(cleaned)
