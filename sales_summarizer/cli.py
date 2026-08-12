@@ -5,14 +5,14 @@ from sales_summarizer.exceptions import InvalidRecordError
 from sales_summarizer.parser import parse_sales_record
 from sales_summarizer.summarizer import SalesSummarizer
 
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Summarize sales data from a CSV file."
-        )
-    parser.add_argument("csv_file", 
-        help="Path to the sales CSV file."
-    ) 
+    )
+    parser.add_argument("csv_file", help="Path to the sales CSV file.")
     return parser.parse_args()
+
 
 def load_records(csv_path: str) -> tuple[list, list]:
     valid_records = []
@@ -29,14 +29,17 @@ def load_records(csv_path: str) -> tuple[list, list]:
 
     return valid_records, errors
 
+
 def main() -> None:
     args = parse_args()
     valid_records, errors = load_records(args.csv_file)
 
     summarizer = SalesSummarizer(valid_records)
 
-    print(f"Processed {len(valid_records)} valid records "
-          f"({len(errors)} skipped due to errors)\n")
+    print(
+        f"Processed {len(valid_records)} valid records "
+        f"({len(errors)} skipped due to errors)\n"
+    )
 
     print(f"Total revenue: {summarizer.total_revenue():.2f}")
     print(f"Total profit: {summarizer.total_profit():.2f}")
@@ -46,7 +49,8 @@ def main() -> None:
     for category, revenue in summarizer.revenue_by_category().items():
         print(f"  {category}: {revenue:.2f}")
 
-    print(f"\nBest-selling sub-category: {summarizer.best_selling_sub_category()}")
+    best = summarizer.best_selling_sub_category()
+    print(f"\nBest-selling sub-category: {best}")
 
     if errors:
         print(f"\nSkipped rows ({len(errors)}):")
