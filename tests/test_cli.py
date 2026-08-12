@@ -1,8 +1,10 @@
 from pathlib import Path
 from sales_summarizer.cli import load_records
 
-CSV_HEADER = "Order ID,Amount,Profit,Quantity,Category,Sub-Category,"
-"PaymentMode,Order Date,CustomerName,City,State\n"
+CSV_HEADER = (
+    "Order ID,Amount,Profit,Quantity,Category,Sub-Category,"
+    "PaymentMode,Order Date,CustomerName,City,State\n"
+)
 
 VALID_ROW = "B-1,100,20,2,Electronics,Phones,UPI,2024-01-01,A,TX,Austin\n"
 BAD_ROW = "B-2,not_a_number,10,1,Furniture,Chairs,Cash,2024-01-02,B,NY,NYC\n"

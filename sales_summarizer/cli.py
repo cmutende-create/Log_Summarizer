@@ -1,6 +1,7 @@
 import argparse
 import csv
 
+from sales_summarizer.cleaner import clean_csv
 from sales_summarizer.exceptions import InvalidRecordError
 from sales_summarizer.parser import parse_sales_record
 from sales_summarizer.summarizer import SalesSummarizer
@@ -8,9 +9,13 @@ from sales_summarizer.summarizer import SalesSummarizer
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Summarize sales data from a CSV file."
+        description="Summarize sales data or clean a generic CSV file."
     )
     parser.add_argument("csv_file", help="Path to the sales CSV file.")
+    parser.add_argument(
+        "--clean-output",
+        help="Write a cleaned copy of any CSV file to this path, then exit.",
+    )
     return parser.parse_args()
 
 
@@ -32,6 +37,23 @@ def load_records(csv_path: str) -> tuple[list, list]:
 
 def main() -> None:
     args = parse_args()
+
+    if args.clean_output:
+        report = clean_csv(args.csv_file, args.clean_output)
+        print(f"Cleaned CSV written to: {args.clean_output}")
+        print(f"Input rows: {report.input_rows}")
+        print(f"Output rows: {report.output_rows}")
+        print(f"Blank rows skipped: {report.skipped_blank_rows}")
+        print(f"Missing cells filled: {report.missing_cells_filled}")
+        print(f"Extra cells dropped: {report.extra_cells_dropped}")
+        print(f"Cells normalized: {report.normalized_cells}")
+
+        if report.renamed_headers:
+            print("\nRenamed headers:")
+            for rename in report.renamed_headers:
+                print(f"  {rename}")
+        return
+
     valid_records, errors = load_records(args.csv_file)
 
     summarizer = SalesSummarizer(valid_records)
